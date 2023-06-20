@@ -1,4 +1,4 @@
-package com.koreaIT.Test_Article_Manager;
+package com.koreaIT.Test_Article_Manager.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

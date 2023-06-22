@@ -1,9 +1,8 @@
 package com.koreaIT.Test_Article_Manager.dto;
 
-public class Article {
+public class Article extends Dto {
 
-	public int id;
-	public String regDate;
+	
 	public String title;
 	public String body;
 	public int viewCnt;

@@ -11,6 +11,7 @@ public class MemberController {
 	List<Member> members;
 	Scanner sc;
 	int lastMemberId;
+	String cmd;
 	
 	public MemberController(List<Member> members, Scanner sc) {
 		this.members = members;
@@ -18,7 +19,18 @@ public class MemberController {
 		this.lastMemberId = 0;
 	}
 
-	public void dojoin() {
+	public void doAction(String cmd, String methodName) {
+		this.cmd = cmd;
+		
+		switch(methodName) {
+		case "join" : 
+			doJoin();
+			break;
+		
+		}
+		
+	}
+	public void doJoin() {
 		int id = lastMemberId + 1;
 		lastMemberId = id;
 		String regDate = Util.getDate();
@@ -76,4 +88,5 @@ public class MemberController {
 	
 		return true;
 	}
+
 }

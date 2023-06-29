@@ -1,7 +1,6 @@
 package com.koreaIT.Test_Article_Manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,21 +45,35 @@ public class App {
 				break;
 			}
 			
-			if (cmd.equals("member join")) {
-				memberController.dojoin();
-			} else if (cmd.equals("article write")) {
-				articleController.doWrite();
-			} else if (cmd.startsWith("article list")) {
-				articleController.showList(cmd);
-			} else if (cmd.startsWith("article detail ")) {
-				articleController.showDetail(cmd);
-			} else if (cmd.startsWith("article modify ")) {
-				articleController.doModify(cmd);
-			} else if (cmd.startsWith("article delete ")) {
-				articleController.doDelete(cmd);
-			} else {
+			String[] cmdBits = cmd.split(" ");
+			
+			String controllerName = cmdBits[0];
+			String methodName = cmdBits[1];
+			
+			if(controllerName.equals("member")) {
+				memberController.doAction(cmd, methodName);
+			} else if(controllerName.equals("article")) {
+				articleController.doAction(cmd, methodName);
+			}else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
+				
+			
+//			if (cmd.equals("member join")) {
+//				memberController.dojoin();
+//			} else if (cmd.equals("article write")) {
+//				articleController.doWrite();
+//			} else if (cmd.startsWith("article list")) {
+//				articleController.showList(cmd);
+//			} else if (cmd.startsWith("article detail ")) {
+//				articleController.showDetail(cmd);
+//			} else if (cmd.startsWith("article modify ")) {
+//				articleController.doModify(cmd);
+//			} else if (cmd.startsWith("article delete ")) {
+//				articleController.doDelete(cmd);
+//			} else {
+//				System.out.println("존재하지 않는 명령어 입니다");
+//			}
 		}
 
 		System.out.println("== 프로그램 끝 ==");

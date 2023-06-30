@@ -1,4 +1,4 @@
-package com.koreaIT.Test_Article_Manager;
+package com.koreaIT.Test_Article_Manager.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,12 +8,12 @@ import java.util.Scanner;
 import com.koreaIT.Test_Article_Manager.dto.Article;
 import com.koreaIT.Test_Article_Manager.util.Util;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
-	List<Article> articles;
-	Scanner sc;
-	int lastArticleId;
-	String cmd;
+	private List<Article> articles;
+	private Scanner sc;
+	private int lastArticleId;
+	private String cmd;
 	
 	public ArticleController(List<Article> articles, Scanner sc) {
 		this.articles = articles;
@@ -21,6 +21,7 @@ public class ArticleController {
 		this.lastArticleId = 3;
 	}
 	
+	@Override
 	public void doAction(String cmd, String methodName) {
 		this.cmd = cmd;
 		
@@ -40,10 +41,13 @@ public class ArticleController {
 		case "delete" : 
 			doDelete();
 			break;	
+		default:
+			System.out.println("존재하지 않는 명령어 입니다");
+			break;
 		}
 	}
 	
-	public void doWrite() {
+	private void doWrite() {
 		int id = lastArticleId + 1;
 		lastArticleId = id;
 		String regDate = Util.getDate();
@@ -60,7 +64,7 @@ public class ArticleController {
 		
 	}
 
-	public void showList() {
+	private void showList() {
 		if (articles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
@@ -94,8 +98,14 @@ public class ArticleController {
 		
 	}
 
-	public void showDetail() {
+	private void showDetail() {
 		String[] cmdBits = cmd.split(" ");
+		
+		if (cmdBits.length == 2) {
+			System.out.println("명령어를 확인해주세요");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 		
 		Article foundArticle = getArticleById(id);
@@ -116,8 +126,14 @@ public class ArticleController {
 	}
 	
 	
-	public void doModify() {
+	private void doModify() {
 		String[] cmdBits = cmd.split(" ");
+		
+		if (cmdBits.length == 2) {
+			System.out.println("명령어를 확인해주세요");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 		
 		Article foundArticle = getArticleById(id);
@@ -139,8 +155,14 @@ public class ArticleController {
 		
 	}
 
-	public void doDelete() {
+	private void doDelete() {
 		String[] cmdBits = cmd.split(" ");
+		
+		if (cmdBits.length == 2) {
+			System.out.println("명령어를 확인해주세요");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 		
 		Article foundArticle = getArticleById(id);

@@ -26,7 +26,11 @@ public class ArticleController extends Controller {
 		this.cmd = cmd;
 		
 		switch(methodName) {
-		case "write" : 
+		case "write" :
+			if (isLogined() == false) {
+				System.out.println("로그인 후 이용해주세요");
+				break;
+			}
 			doWrite();
 			break;
 		case "list" : 
@@ -49,11 +53,6 @@ public class ArticleController extends Controller {
 	
 	private void doWrite() {
 		
-		if (isLogined() == false) {
-			System.out.println("로그인 후 이용해주세요");
-			return;
-		}
-		
 		int id = lastArticleId + 1;
 		lastArticleId = id;
 		String regDate = Util.getDate();
@@ -62,7 +61,7 @@ public class ArticleController extends Controller {
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
 
-		Article article = new Article(id, regDate, title, body);
+		Article article = new Article(id, regDate, loginedMember.id, title, body);
 		
 		articles.add(article);
 
@@ -96,10 +95,10 @@ public class ArticleController extends Controller {
 			}
 		}
 		
-		System.out.println("번호	|	제목   |			날짜		  |  조회");
+		System.out.println("번호	|	제목   |			날짜		  |  작성자	|  조회");
 		Collections.reverse(printArticles);
 		for (Article article : printArticles) {
-			System.out.printf("%d	|	%s  | %s  |  %d\n", article.id, article.title, article.regDate, article.viewCnt);
+			System.out.printf("%d	|	%s  | %s  |  %d  |  %d\n", article.id, article.title, article.regDate, article.memberId, article.viewCnt);
 		}
 		
 	}
@@ -125,6 +124,7 @@ public class ArticleController extends Controller {
 		
 		System.out.printf("번호 : %d\n", foundArticle.id);
 		System.out.printf("날짜 : %s\n", foundArticle.regDate);
+		System.out.printf("작성자 : %d\n", foundArticle.memberId);
 		System.out.printf("제목 : %s\n", foundArticle.title);
 		System.out.printf("내용 : %s\n", foundArticle.body);
 		System.out.printf("조회수 : %dwit\n", foundArticle.viewCnt);
@@ -195,9 +195,9 @@ public class ArticleController extends Controller {
 
 	public void makeTestData() {
 		System.out.println("게시물 테스트 데이터를 생성합니다");
-		articles.add(new Article(1, Util.getDate(), "제목1", "내용1", 10));
-		articles.add(new Article(2, Util.getDate(), "제목2", "내용2", 20));
-		articles.add(new Article(3, Util.getDate(), "제목3", "내용3", 30));
+		articles.add(new Article(1, Util.getDate(), 1, "제목1", "내용1", 10));
+		articles.add(new Article(2, Util.getDate(), 2, "제목2", "내용2", 20));
+		articles.add(new Article(3, Util.getDate(), 2, "제목3", "내용3", 30));
 
 	}
 	

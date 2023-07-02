@@ -12,13 +12,12 @@ public class MemberController extends Controller {
 	private List<Member> members;
 	private Scanner sc;
 	private int lastMemberId;
-	private Member loginedMember;
 	
 	public MemberController(Scanner sc) {
 		this.sc = sc;
 		this.members = new ArrayList<>();
 		this.lastMemberId = 3;
-		this.loginedMember = null;
+
 	}
 
 	@Override
@@ -120,18 +119,19 @@ public class MemberController extends Controller {
 			return;
 		}
 		
-		this.loginedMember = member;
+		loginedMember = member;
 		
 		System.out.printf("로그인 성공! %s님 환영합니다\n", member.name);
 	}
 
 	private void doLogout() {
+		
 		if (isLogined() == false) {
 			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
 
-		this.loginedMember = null;
+		loginedMember = null;
 		System.out.println("로그아웃 되었습니다");
 	
 	}
@@ -143,12 +143,8 @@ public class MemberController extends Controller {
 		}
 
 		System.out.println("== 내 정보 ==");
-		System.out.printf("로그인 아이디 : %s\n", this.loginedMember.loginId);
-		System.out.printf("이름 : %s\n", this.loginedMember.name);
-	}
-
-	private boolean isLogined() {
-		return loginedMember != null;
+		System.out.printf("로그인 아이디 : %s\n", loginedMember.loginId);
+		System.out.printf("이름 : %s\n", loginedMember.name);
 	}
 
 	private Member getMemberByLoginId(String loginId) {

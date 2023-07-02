@@ -2,6 +2,7 @@ package com.koreaIT.Test_Article_Manager.controller;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import com.koreaIT.Test_Article_Manager.dto.Member;
 import com.koreaIT.Test_Article_Manager.util.Util;
@@ -12,9 +13,9 @@ public class MemberController extends Controller {
 	private Scanner sc;
 	private int lastMemberId;
 	
-	public MemberController(List<Member> members, Scanner sc) {
-		this.members = members;
+	public MemberController(Scanner sc) {
 		this.sc = sc;
+		this.members = new ArrayList<>();
 		this.lastMemberId = 0;
 	}
 
@@ -25,13 +26,16 @@ public class MemberController extends Controller {
 		case "join" : 
 			doJoin();
 			break;
+		case "login" : 
+			doLogin();
+			break;
 		default:
 			System.out.println("존재하지 않는 명령어 입니다");
 			break;
 		}
 		
 	}
-	
+
 	private void doJoin() {
 		int id = lastMemberId + 1;
 		lastMemberId = id;
@@ -78,20 +82,49 @@ public class MemberController extends Controller {
 		
 	}
 
+	private void doLogin() {
+		System.out.printf("로그인 아이 : ");
+		String loginId = sc.nextLine();
+		System.out.printf("로그인 비밀번호 확인 : ");
+		String loginPw = sc.nextLine();
+		
+		Member member = getMemberByLoginId(loginId);
 
-
-	private boolean loninIdDupChk(String loginId) {
-	
-		for (Member member : members) {
-			if(member.loginId.equals(loginId)) {
-				return false;
-			}
+		if (member == null) {
+			System.out.println("존재하지 않는 아이디 입니다");
+			return;
 		}
-	
-		return true;
+		
+		if(member.loginPw.equals(loginPw) == false) {
+			System.out.println("비밀번호를 확인해주세요");
+			return;
+		}
+		
+		System.out.printf("로그인 성공! %s님 환영합니다\n", member.name);
 	}
 
 
+	private Member getMemberByLoginId(String loginId) {
+		
+		for (Member member : members) {
+			if(member.loginId.equals(loginId)) {
+				return member;
+			}
+		}
+		
+		return null;
+	}
+
+	private boolean loninIdDupChk(String loginId) {
 	
+		Member member = getMemberByLoginId(loginId);
+		
+		if (member == null) {
+			return true;
+		}
+		
+		return false;
+
+	}	
 	
 }

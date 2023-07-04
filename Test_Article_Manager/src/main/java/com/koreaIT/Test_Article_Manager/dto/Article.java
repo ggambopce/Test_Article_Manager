@@ -2,7 +2,6 @@ package com.koreaIT.Test_Article_Manager.dto;
 
 public class Article extends Dto {
 
-	
 	public String title;
 	public String body;
 	public int viewCnt;

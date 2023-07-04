@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import com.koreaIT.Test_Article_Manager.cotainer.Container;
 import com.koreaIT.Test_Article_Manager.dto.Article;
+import com.koreaIT.Test_Article_Manager.dto.Member;
 import com.koreaIT.Test_Article_Manager.util.Util;
 
 public class ArticleController extends Controller {
@@ -16,7 +18,7 @@ public class ArticleController extends Controller {
 	private String cmd;
 	
 	public ArticleController(Scanner sc) {
-		this.articles = new ArrayList<>();
+		this.articles = Container.articleDao.articles;
 		this.sc = sc;
 		this.lastArticleId = 3;
 	}
@@ -95,7 +97,19 @@ public class ArticleController extends Controller {
 		System.out.println("번호	|	제목   |			날짜		  |  작성자	|  조회");
 		Collections.reverse(printArticles);
 		for (Article article : printArticles) {
-			System.out.printf("%d	|	%s  | %s  |  %d  |  %d\n", article.id, article.title, article.regDate, article.memberId, article.viewCnt);
+			
+			String writerName = null;
+
+			List<Member> members = Container.memberDao.members;
+
+			for(Member member : members) {
+				if(article.memberId == member.id) {
+					writerName = member.name;
+					break;
+				}
+			}
+
+			System.out.printf("%d	|	%s	|	%s	|	%s	|	%d\n", article.id, article.title, article.regDate, writerName, article.viewCnt);
 		}
 		
 	}
@@ -124,7 +138,7 @@ public class ArticleController extends Controller {
 		System.out.printf("작성자 : %d\n", foundArticle.memberId);
 		System.out.printf("제목 : %s\n", foundArticle.title);
 		System.out.printf("내용 : %s\n", foundArticle.body);
-		System.out.printf("조회수 : %dwit\n", foundArticle.viewCnt);
+		System.out.printf("조회수 : %d\n", foundArticle.viewCnt);
 		
 	}
 	

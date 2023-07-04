@@ -1,9 +1,9 @@
 package com.koreaIT.Test_Article_Manager.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.koreaIT.Test_Article_Manager.cotainer.Container;
 import com.koreaIT.Test_Article_Manager.dto.Member;
 import com.koreaIT.Test_Article_Manager.util.Util;
 
@@ -15,7 +15,7 @@ public class MemberController extends Controller {
 	
 	public MemberController(Scanner sc) {
 		this.sc = sc;
-		this.members = new ArrayList<>();
+		this.members = Container.memberDao.members;
 		this.lastMemberId = 3;
 
 	}

@@ -1,7 +1,5 @@
 package com.koreaIT.Test_Article_Manager.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +15,7 @@ public class ArticleController extends Controller {
 	private String cmd;
 	
 	public ArticleController(Scanner sc) {
-		this.articles = Container.articleDao.articles;
+	this.articles = Container.articleDao.articles;
 		this.sc = sc;
 	}
 	
@@ -66,34 +64,21 @@ public class ArticleController extends Controller {
 	}
 
 	private void showList() {
-		if (articles.size() == 0) {
+		
+		String searchKeyword = cmd.substring("article list".length()).trim();
+		 
+		System.out.println("검색어 : " + searchKeyword);
+
+		List<Article> printArticles = Container.articleService.getPrintArticles(searchKeyword);
+
+		if (printArticles.size() == 0) {
 			System.out.println("게시글이 없습니다");
 			return;
 		}
 		
-		String searchKeyword = cmd.substring("article list".length()).trim();
-		 
-		List<Article> printArticles = new ArrayList<>(articles);
-		
-		if(searchKeyword.length() > 0) {
-			System.out.println("검색어 : " + searchKeyword);
-			
-			printArticles.clear();
-			
-			for(Article article : articles) {
-				if(article.title.contains(searchKeyword)) {
-					printArticles.add(article);
-				}
-			}
-			if(printArticles.size() == 0){
-				System.out.println("검색결과가 없습니다");
-				return;
-			}
-		}
-		
 		System.out.println("번호	|	제목   |			날짜		  |  작성자	|  조회");
-		Collections.reverse(printArticles);
-		for (Article article : printArticles) {
+		for (int i = printArticles.size() - 1; i >= 0; i--) {
+			Article article = printArticles.get(i);
 			
 			String writerName = null;
 

@@ -6,4 +6,5 @@ public class Dao {
 	public int getLastId() {
 		return lastId + 1;
 	}
+	
 }

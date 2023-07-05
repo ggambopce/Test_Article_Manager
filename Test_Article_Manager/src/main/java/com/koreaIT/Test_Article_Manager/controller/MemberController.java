@@ -89,28 +89,48 @@ public class MemberController extends Controller {
 
 	private void doLogin() {
 		
-		System.out.printf("로그인 아이 : ");
-		String loginId = sc.nextLine();
-		System.out.printf("로그인 비밀번호 확인 : ");
-		String loginPw = sc.nextLine();
+		Member member = null;
+		String loginPw = null;
 		
-		Member member = getMemberByLoginId(loginId);
+		while(true) {
+			System.out.printf("로그인 아이디 : ");
+			String loginId = sc.nextLine();
 
-		if (member == null) {
-			System.out.println("존재하지 않는 아이디 입니다");
-			return;
-		}
-		
-		if(member.loginPw.equals(loginPw) == false) {
-			System.out.println("비밀번호를 확인해주세요");
-			return;
+			if(loginId.trim().length() == 0) {
+				System.out.println("로그인 아이디를 입력해주세요");
+				continue;
+			}
+
+			while(true) {
+				System.out.printf("로그인 비밀번호 : ");
+				loginPw = sc.nextLine();
+
+				if(loginPw.trim().length() == 0) {
+					System.out.println("로그인 비밀번호를 입력해주세요");
+					continue;
+				}
+				break;
+			}
+
+			member = getMemberByLoginId(loginId);
+
+			if (member == null) {
+				System.out.println("존재하지 않는 아이디 입니다");
+				return;
+			}
+
+			if(member.loginPw.equals(loginPw) == false) {
+				System.out.println("비밀번호를 확인해주세요");
+				return;
+			}
+			break;
 		}
 		
 		loginedMember = member;
 		
 		System.out.printf("로그인 성공! %s님 환영합니다\n", member.name);
 	}
-
+		
 	private void doLogout() {
 		
 		loginedMember = null;
